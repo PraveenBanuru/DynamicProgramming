@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class CoinChange {
 
@@ -48,6 +49,42 @@ public class CoinChange {
 			}
 		return dp[len][n];
 	}
+	
+	
+	// if the coins are given in a list
+    public static long getWays(int n, List<Long> coin) {
+    
+    
+        
+        int len = coin.size();
+        int[][] dp = new int[len+1][n + 1];
+
+        for (int i = 0; i < len+ 1; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                if ( i == 0)
+                    dp[i][j] = 0;
+            
+                if ( j == 0)
+                    dp[i][j] = 1;
+            }    
+        }
+        
+        for (int i= 1; i < len + 1; i++) {
+            for (int j = 1; j < n + 1; j++){
+            	
+            	int x=coin.get(i-1).intValue();
+         
+                if(x <= j)
+                    dp[i][j]= dp[i][j-x]+dp[i-1][j];
+                else
+                    dp[i][j]=dp[i-1][j];
+                    
+            }
+        }
+        
+       
+        return Long.parseLong(dp[len][n]+"");
+    }	
 	
 	
 	}
