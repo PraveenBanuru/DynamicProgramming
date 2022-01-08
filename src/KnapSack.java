@@ -46,10 +46,10 @@ public class KnapSack {
 	static int knapSackTopDown(int W, int[] wt, int[] val) {
 
 		int N = wt.length;
-		int[][] dp = new int[W + 1][N + 1];
+		int[][] dp = new int[N+1][W + 1];
 
-		for (int i = 0; i < W + 1; i++) {
-			for (int j = 0; j < N + 1; j++) {
+		for (int i = 0; i < N + 1; i++) {
+			for (int j = 0; j < W + 1; j++) {
 
 				if (i == 0 || j == 0)
 					dp[i][j] = 0;
@@ -57,18 +57,20 @@ public class KnapSack {
 			}
 		}
 
-		for (int i = 1; i < W + 1; i++) {
-			for (int j = 1; j < N + 1; j++) {
-				if (wt[j - 1] <= i) {
-					dp[i][j] = Math.max(val[j - 1] + dp[i - wt[j - 1]][j - 1], dp[i ][j - 1]);
-				}
+		for (int i = 1; i < N + 1; i++) {
+			for (int j = 1; j < W+ 1; j++) {
+				
+				if(wt[i-1]<=j)
+					
+					dp[i][j]=Math.max(val[i-1]+dp[i-1][j-wt[i-1]], dp[i-1][j]);
 				else
-					dp[i][j] = dp[i ][j - 1];
+					dp[i][j]=dp[i-1][j];
+					
 
 			}
 
 		}
-		return dp[W][N];
+		return dp[N][W];
 
 	}
 
